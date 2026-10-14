@@ -1,0 +1,199 @@
+services:
+  # ==============================================================
+  # MICROSERVICIOS DE NEGOCIO
+  # ==============================================================
+
+  # Microservicio de Catálogo de Productos
+  ms-catalog:
+    build:
+      context: ./ms-pedidos360-catalog
+      dockerfile: Dockerfile
+    container_name: pedidos360-catalog
+    ports:
+      # BASELINE-VULN [SEC-REQ-014]: puerto interno expuesto directamente
+      - "127.0.0.1:8086:8086"
+    environment:
+      - PORT=8086
+      - DB_HOST=${DB_HOST:-postgres-db}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=pedidos360_catalog
+      - DB_USER=${DB_USER:-postgres}
+      # BASELINE-VULN [SEC-REQ-012]: credenciales por defecto predecibles en variables de entorno (postgres)
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_SSLMODE=disable
+    depends_on:
+      postgres-db:
+        condition: service_started
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  # Microservicio de Órdenes / Pedidos
+  ms-orders:
+    build:
+      context: ./ms-pedidos360-orders
+      dockerfile: Dockerfile
+    container_name: pedidos360-orders
+    ports:
+      # BASELINE-VULN [SEC-REQ-014]: puerto interno expuesto directamente
+      - "127.0.0.1:8087:8087"
+    environment:
+      - PORT=8087
+      - DB_HOST=${DB_HOST:-postgres-db}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=pedidos360_orders
+      - DB_USER=${DB_USER:-postgres}
+      # BASELINE-VULN [SEC-REQ-012]: credenciales por defecto predecibles en variables de entorno (postgres)
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_SSLMODE=disable
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-rabbitmq}
+      - RABBITMQ_PORT=${RABBITMQ_PORT:-5672}
+      # BASELINE-VULN [SEC-REQ-012]: credenciales por defecto de RabbitMQ (guest/guest)
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME:-guest}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD:-guest}
+    depends_on:
+      postgres-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  # Microservicio de Notificaciones y Facturación PDF
+  ms-notify:
+    build:
+      context: ./ms-pedidos360-notify
+      dockerfile: Dockerfile
+    container_name: pedidos360-notify
+    environment:
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-rabbitmq}
+      - RABBITMQ_PORT=${RABBITMQ_PORT:-5672}
+      # BASELINE-VULN [SEC-REQ-012]: credenciales por defecto de RabbitMQ (guest/guest)
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME:-guest}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD:-guest}
+      - SMTP_HOST=${SMTP_HOST:-mailpit}
+      - SMTP_PORT=${SMTP_PORT:-1025}
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
+      - SMTP_AUTH=false
+      - SMTP_STARTTLS=false
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  # ==============================================================
+  # BFF (Backend For Frontend) - API Gateway / Orquestador
+  # ==============================================================
+  bff-api:
+    build:
+      context: ./api_cloud
+      dockerfile: Dockerfile
+    container_name: pedidos360-bff
+    ports:
+      - "127.0.0.1:8088:8088"
+    environment:
+      - SECURITY_ENABLED=${SECURITY_ENABLED:-true}
+      # BASELINE-VULN [SEC-REQ-012]: secreto JWT por defecto debil (changeme)
+      - JWT_SECRET=${JWT_SECRET:-changeme}
+      - DB_HOST=${DB_HOST:-postgres-db}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - ORDERS_SERVICE_URL=http://ms-orders:8087
+      - MICROSERVICE_BASE_URL=http://ms-orders:8087
+      - CATALOG_SERVICE_URL=http://ms-catalog:8086
+    depends_on:
+      - ms-orders
+      - ms-catalog
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  # ==============================================================
+  # FRONTEND (React + Vite + Nginx)
+  # ==============================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:8088
+    container_name: pedidos360-frontend
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      - bff-api
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  # ==============================================================
+  # BASE DE DATOS POSTGRESQL (Para Catálogo y Órdenes)
+  # ==============================================================
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: pedidos360-db
+    ports:
+      # BASELINE-VULN [SEC-REQ-014]: puerto de base de datos expuesto externamente
+      - "127.0.0.1:5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER:-postgres}
+      # BASELINE-VULN [SEC-REQ-012]: clave de base de datos por defecto predecible (postgres)
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  # ==============================================================
+  # BROKER RABBITMQ & SERVIDOR SMTP MAILPIT
+  # ==============================================================
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: pedidos360-rabbitmq
+    ports:
+      # BASELINE-VULN [SEC-REQ-014]: puerto del broker RabbitMQ expuesto externamente
+      - "127.0.0.1:5672:5672"
+      - "127.0.0.1:15672:15672"
+    environment:
+      # BASELINE-VULN [SEC-REQ-012]: credenciales por defecto de RabbitMQ (guest/guest)
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: pedidos360-mailpit
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+    environment:
+      - MP_MAX_MESSAGES=500
+    networks:
+      - pedidos360-net
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  rabbitmq_data:
+
+networks:
+  pedidos360-net:
+    driver: bridge
