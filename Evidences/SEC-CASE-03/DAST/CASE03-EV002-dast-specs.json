@@ -1,0 +1,56 @@
+{
+  "test_suite": "SEC-CASE-03: API",
+  "phase": "DAST",
+  "target_base_url": "http://127.0.0.1:8088",
+  "tests": [
+    {
+      "test_id": "DAST-03-01",
+      "sec_req": "SEC-REQ-006",
+      "owasp_api": "API3:2023 (BOPM / Mass Assignment)",
+      "name": "Mass assignment de rol ADMIN en registro de usuarios",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "body": {
+        "email": "malicious@test.com",
+        "passwordHash": "Password123!",
+        "name": "Attacker",
+        "role": "ADMIN"
+      },
+      "expected_baseline_status": 201,
+      "expected_remediated_status": 201,
+      "assertion": "User is persisted with role ADMIN as sent in request body",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-03-02",
+      "sec_req": "SEC-REQ-006",
+      "owasp_api": "API3:2023 (Business Logic)",
+      "name": "Manipulación de precio unitario en creación de pedidos",
+      "method": "POST",
+      "path": "/api/orders",
+      "body": {
+        "items": [
+          {
+            "productoId": "valid-product-id",
+            "cantidad": 5,
+            "precioUnitario": 1.00
+          }
+        ]
+      },
+      "expected_baseline_status": 201,
+      "assertion": "Order created using client-supplied price 1.00 rather than catalog price",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-03-03",
+      "sec_req": "SEC-REQ-007",
+      "owasp_api": "API3:2023 (Data Exposure)",
+      "name": "Exposición de passwordHash en /api/auth/me",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "expected_baseline_status": 200,
+      "assertion": "Response JSON body contains raw passwordHash field",
+      "result": "FAIL"
+    }
+  ]
+}

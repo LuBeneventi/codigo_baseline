@@ -1,0 +1,54 @@
+﻿{
+    "check_id":  "java.spring.security.injection.tainted-sql-string.tainted-sql-string",
+    "path":  "ms-pedidos360-catalog\\src\\main\\java\\com\\pedidos360\\catalog\\controller\\ProductController.java",
+    "start":  {
+                  "line":  38,
+                  "col":  22,
+                  "offset":  1715
+              },
+    "end":  {
+                "line":  38,
+                "col":  96,
+                "offset":  1789
+            },
+    "extra":  {
+                  "message":  "User data flows into this manually-constructed SQL string. User data can be safely inserted into SQL strings using prepared statements or an object-relational mapper (ORM). Manually-constructed SQL strings is a possible indicator of SQL injection, which could let an attacker steal or manipulate data from the database. Instead, use prepared statements (`connection.PreparedStatement`) or a safe library.",
+                  "metadata":  {
+                                   "cwe":  [
+                                               "CWE-89: Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)"
+                                           ],
+                                   "owasp":  [
+                                                 "A01:2017 - Injection",
+                                                 "A03:2021 - Injection",
+                                                 "A05:2025 - Injection"
+                                             ],
+                                   "references":  [
+                                                      "https://docs.oracle.com/javase/7/docs/api/java/sql/PreparedStatement.html"
+                                                  ],
+                                   "category":  "security",
+                                   "technology":  [
+                                                      "spring"
+                                                  ],
+                                   "cwe2022-top25":  true,
+                                   "cwe2021-top25":  true,
+                                   "subcategory":  [
+                                                       "vuln"
+                                                   ],
+                                   "likelihood":  "HIGH",
+                                   "impact":  "MEDIUM",
+                                   "confidence":  "MEDIUM",
+                                   "interfile":  true,
+                                   "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                   "vulnerability_class":  [
+                                                               "SQL Injection"
+                                                           ],
+                                   "source":  "https://semgrep.dev/r/java.spring.security.injection.tainted-sql-string.tainted-sql-string",
+                                   "shortlink":  "https://sg.run/9rzz"
+                               },
+                  "severity":  "ERROR",
+                  "fingerprint":  "requires login",
+                  "lines":  "requires login",
+                  "validation_state":  "NO_VALIDATOR",
+                  "engine_kind":  "OSS"
+              }
+}

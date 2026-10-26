@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8087}
+
+spring:
+  application:
+    name: ms-pedidos360-orders
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    # BASELINE-VULN [SEC-REQ-012]: credenciales por defecto de RabbitMQ (guest/guest)
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:pedidos360_orders}?sslmode=${DB_SSLMODE:disable}
+    username: ${DB_USER:postgres}
+    # BASELINE-VULN [SEC-REQ-012]: clave de base de datos por defecto predecible (postgres)
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    # BASELINE-VULN [SEC-REQ-014]: swagger-ui habilitado en entorno productivo/general
+    enabled: true

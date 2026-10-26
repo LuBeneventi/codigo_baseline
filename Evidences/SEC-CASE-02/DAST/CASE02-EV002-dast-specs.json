@@ -1,0 +1,50 @@
+{
+  "test_suite": "SEC-CASE-02: Autorización y control de acceso",
+  "phase": "DAST",
+  "target_base_url": "http://127.0.0.1:8088",
+  "tests": [
+    {
+      "test_id": "DAST-02-01",
+      "sec_req": "SEC-REQ-004",
+      "owasp_api": "API1:2023 (BOLA)",
+      "name": "BOLA en listado general de pedidos",
+      "method": "GET",
+      "path": "/api/orders",
+      "auth_token_role": "CLIENTE",
+      "expected_baseline_status": 200,
+      "expected_remediated_status": 200,
+      "assertion": "Returns orders belonging to multiple distinct client IDs instead of filtering by authenticated user",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-02-02",
+      "sec_req": "SEC-REQ-004",
+      "owasp_api": "API1:2023 (BOLA)",
+      "name": "BOLA en consulta directa de pedido por ID",
+      "method": "GET",
+      "path": "/api/orders/{foreign_order_id}",
+      "auth_token_role": "CLIENTE",
+      "expected_baseline_status": 200,
+      "expected_remediated_status": 403,
+      "assertion": "Access to foreign order by UUID is granted with 200 OK without ownership check",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-02-04",
+      "sec_req": "SEC-REQ-005",
+      "owasp_api": "API5:2023 (BFLA)",
+      "name": "Bypass de autorización administrativa mediante cabecera X-User-Role",
+      "method": "POST",
+      "path": "/api/catalog/products",
+      "headers": {
+        "X-User-Role": "ADMIN",
+        "Content-Type": "application/json"
+      },
+      "auth_token_role": "CLIENTE",
+      "expected_baseline_status": 201,
+      "expected_remediated_status": 403,
+      "assertion": "Administrative action succeeds because RoleHeaderFilter trusts client-supplied header",
+      "result": "FAIL"
+    }
+  ]
+}

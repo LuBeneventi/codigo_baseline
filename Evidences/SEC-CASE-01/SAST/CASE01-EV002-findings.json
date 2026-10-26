@@ -1,0 +1,14 @@
+﻿[
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\AuthController.java",
+        "line":  47,
+        "raw":  "// BASELINE-VULN [SEC-REQ-001]: falta de bloqueo por intentos fallidos de autenticacion",
+        "category":  "SEC-CASE-01: Autenticación y gestión de sesiones"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\JwtService.java",
+        "line":  35,
+        "raw":  "// BASELINE-VULN [SEC-REQ-003]: duracion de sesion excesiva (30 dias) sin renovacion",
+        "category":  "SEC-CASE-01: Autenticación y gestión de sesiones"
+    }
+]

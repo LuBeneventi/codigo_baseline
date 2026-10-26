@@ -1,0 +1,312 @@
+openapi: 3.0.3
+info:
+  title: ms-pedidos360-orders API
+  description: Microservicio de gestión y ciclo de vida de pedidos de Pedidos360.
+  version: 1.0.0
+servers:
+  - url: /
+    description: Servidor local / Cloud
+paths:
+  /api/orders:
+    post:
+      summary: Crear un nuevo pedido
+      description: Registra un nuevo pedido con cliente e ítems en estado inicial CREADO y calcula su importe total.
+      operationId: createOrder
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '201':
+          description: Pedido creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: Datos de entrada inválidos (campos requeridos faltantes, valores no positivos).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Listar pedidos con filtros opcionales
+      description: Retorna pedidos filtrando opcionalmente por estado y rango de fechas de creación.
+      operationId: listOrders
+      tags:
+        - Orders
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filtrar por estado del pedido
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+        - name: from
+          in: query
+          required: false
+          description: Fecha y hora inicial del rango de creación (formato ISO-8601, ej. 2026-09-01T00:00:00)
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: false
+          description: Fecha y hora final del rango de creación (formato ISO-8601, ej. 2026-09-03T23:59:59)
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Lista de pedidos encontrados.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: Parámetros de consulta con formato de fecha inválido o rango inconsistente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/orders/{id}:
+    get:
+      summary: Consultar un pedido por ID
+      description: Retorna la información completa de un pedido específico.
+      operationId: getOrderById
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador numérico del pedido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Pedido encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '404':
+          description: Pedido no encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/orders/{id}/status:
+    put:
+      summary: Actualizar estado de un pedido
+      description: Ejecuta una transición de estado validada por la máquina de estados. Retorna 409 Conflict si la transición no es válida.
+      operationId: updateOrderStatus
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador numérico del pedido
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusRequest'
+      responses:
+        '200':
+          description: Estado del pedido actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: Solicitud malformada o estado no reconocido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Pedido no encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Transición de estado no permitida según la máquina de estados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    OrderStatus:
+      type: string
+      enum:
+        - CREADO
+        - ACEPTADO
+        - EN_PREPARACION
+        - DESPACHADO
+        - ENTREGADO
+        - CANCELADO
+      example: CREADO
+
+    OrderItemRequest:
+      type: object
+      required:
+        - descripcion
+        - cantidad
+        - precioUnitario
+      properties:
+        productoId:
+          type: integer
+          format: int64
+          nullable: true
+          example: 1
+        descripcion:
+          type: string
+          example: Café Colombiano Molido 500g
+        cantidad:
+          type: integer
+          minimum: 1
+          example: 2
+        precioUnitario:
+          type: number
+          format: double
+          minimum: 0.01
+          example: 18.50
+
+    OrderItemResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        productoId:
+          type: integer
+          format: int64
+          nullable: true
+          example: 1
+        descripcion:
+          type: string
+          example: Café Colombiano Molido 500g
+        cantidad:
+          type: integer
+          example: 2
+        precioUnitario:
+          type: number
+          format: double
+          example: 18.50
+        subtotal:
+          type: number
+          format: double
+          example: 37.00
+
+    OrderRequest:
+      type: object
+      required:
+        - clienteId
+        - items
+      properties:
+        clienteId:
+          type: string
+          example: "CLI-98234"
+        clienteNombre:
+          type: string
+          nullable: true
+          example: "Sofía Morales"
+        clienteEmail:
+          type: string
+          nullable: true
+          example: "sofia.morales@example.com"
+        clienteDireccion:
+          type: string
+          nullable: true
+          example: "Av. Providencia 1234, Santiago"
+        clienteRut:
+          type: string
+          nullable: true
+          example: "18.765.432-1"
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OrderItemRequest'
+
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        clienteId:
+          type: string
+          example: "CLI-98234"
+        clienteNombre:
+          type: string
+          example: "Sofía Morales"
+        clienteEmail:
+          type: string
+          example: "sofia.morales@example.com"
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemResponse'
+        total:
+          type: number
+          format: double
+          example: 37.00
+        estado:
+          $ref: '#/components/schemas/OrderStatus'
+        fechaCreacion:
+          type: string
+          format: date-time
+          example: "2026-09-03T15:30:00"
+        fechaActualizacion:
+          type: string
+          format: date-time
+          example: "2026-09-03T15:30:00"
+
+    UpdateStatusRequest:
+      type: object
+      required:
+        - nuevoEstado
+      properties:
+        nuevoEstado:
+          $ref: '#/components/schemas/OrderStatus'
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-09-03T15:35:00"
+        status:
+          type: integer
+          example: 409
+        error:
+          type: string
+          example: Conflict
+        message:
+          type: string
+          example: "Transición inválida: No es posible cambiar el estado de CREADO a DESPACHADO. Estados permitidos: [ACEPTADO, CANCELADO]"
+        path:
+          type: string
+          example: /api/orders/1/status

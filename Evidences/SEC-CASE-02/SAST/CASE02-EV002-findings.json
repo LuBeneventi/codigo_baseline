@@ -1,0 +1,62 @@
+﻿[
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\RoleHeaderFilter.java",
+        "line":  12,
+        "raw":  "// BASELINE-VULN [SEC-REQ-005]: el rol lo declara el cliente, no se saca del token",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\RoleHeaderFilter.java",
+        "line":  27,
+        "raw":  "// BASELINE-VULN [SEC-REQ-005]: el rol lo declara el cliente, no se saca del token",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\OrdersController.java",
+        "line":  90,
+        "raw":  "// BASELINE-VULN [SEC-REQ-004]: no se comprueba dueno de las ordenes al listar (BOLA/IDOR)",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\OrdersController.java",
+        "line":  102,
+        "raw":  "// BASELINE-VULN [SEC-REQ-004]: no se comprueba dueno de la orden por ID (BOLA/IDOR)",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\OrdersController.java",
+        "line":  210,
+        "raw":  "// BASELINE-VULN [SEC-REQ-004]: endpoint enriquecido no comprueba dueno de la orden",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "frontend\\src\\api.ts",
+        "line":  32,
+        "raw":  "// BASELINE-VULN [SEC-REQ-005]: el rol administrativo se toma del cliente (localStorage) y se envia en cabecera",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "frontend\\src\\App.tsx",
+        "line":  254,
+        "raw":  "// BASELINE-VULN [SEC-REQ-005]: las llamadas administrativas envian el rol declarado por el cliente",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "frontend\\src\\App.tsx",
+        "line":  282,
+        "raw":  "// BASELINE-VULN [SEC-REQ-005]: el rol administrativo se envia desde el cliente en la cabecera",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "ms-pedidos360-orders\\src\\main\\java\\com\\pedidos360\\orders\\service\\impl\\OrderServiceImpl.java",
+        "line":  82,
+        "raw":  "// BASELINE-VULN [SEC-REQ-004]: no verifica si el pedido pertenece al usuario autenticado (BOLA/IDOR)",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    },
+    {
+        "file":  "ms-pedidos360-orders\\src\\main\\java\\com\\pedidos360\\orders\\service\\impl\\OrderServiceImpl.java",
+        "line":  119,
+        "raw":  "// BASELINE-VULN [SEC-REQ-004]: findAll sin filtrar por usuario autenticado (BOLA/IDOR)",
+        "category":  "SEC-CASE-02: Autorización y control de acceso"
+    }
+]

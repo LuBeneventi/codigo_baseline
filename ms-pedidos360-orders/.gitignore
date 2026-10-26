@@ -1,0 +1,46 @@
+# Maven Build Artifacts
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Compiled Class files
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# IDE & Editor files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+bin/
+
+# Environment & Credentials (Secrets)
+.env
+.env.*
+credentials.json
+*.pem
+*.key
+*.p12
+*.jks
+secrets/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log

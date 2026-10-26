@@ -1,0 +1,23 @@
+{
+  "case_id": "SEC-CASE-02",
+  "tests": [
+    {
+      "test_id": "TEST-SEC-004a",
+      "name": "Aislamiento multi-inquilino en listado de pedidos (BOLA/IDOR)",
+      "status": "FAIL",
+      "failure_reason": "listOrders() consulta órdenes sin filtrar por el cliente autenticado en el repositorio."
+    },
+    {
+      "test_id": "TEST-SEC-004b",
+      "name": "Comprobación de titularidad en consulta de orden por ID",
+      "status": "FAIL",
+      "failure_reason": "getOrderById() recupera y retorna la orden por ID sin contrastar si pertenece al usuario que solicita."
+    },
+    {
+      "test_id": "TEST-SEC-005a",
+      "name": "Autorización basada en token en lugar de cabecera arbitraria",
+      "status": "FAIL",
+      "failure_reason": "RoleHeaderFilter evalúa el rol desde la cabecera HTTP inyectable X-User-Role en lugar del JWT verificado."
+    }
+  ]
+}

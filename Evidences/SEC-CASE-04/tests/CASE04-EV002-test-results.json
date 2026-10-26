@@ -1,0 +1,23 @@
+{
+  "case_id": "SEC-CASE-04",
+  "tests": [
+    {
+      "test_id": "TEST-SEC-010a",
+      "name": "Uso de consultas SQL parametrizadas en búsqueda",
+      "status": "FAIL",
+      "failure_reason": "ProductController concatena directamente el parámetro 'q' sin parametrizar en createNativeQuery."
+    },
+    {
+      "test_id": "TEST-SEC-010b",
+      "name": "Validaciones Bean Validation (@Min, @Positive) en OrderItemRequestDto",
+      "status": "FAIL",
+      "failure_reason": "Se eliminaron las anotaciones activas @Min(1) en cantidad y @Positive en precioUnitario."
+    },
+    {
+      "test_id": "TEST-SEC-009",
+      "name": "Ausencia de renderizado HTML crudo inseguro en React",
+      "status": "FAIL",
+      "failure_reason": "App.tsx utiliza 'dangerouslySetInnerHTML' en 12 ubicaciones para renderizar datos dinámicos."
+    }
+  ]
+}

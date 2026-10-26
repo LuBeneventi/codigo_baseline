@@ -1,0 +1,29 @@
+{
+  "case_id": "SEC-CASE-05",
+  "tests": [
+    {
+      "test_id": "TEST-SEC-013",
+      "name": "Restricción estricta de orígenes CORS",
+      "status": "FAIL",
+      "failure_reason": "SecurityConfig configura CORS con comodín '*' permitiendo cualquier origen arbitrario."
+    },
+    {
+      "test_id": "TEST-SEC-012",
+      "name": "Ausencia de contraseñas y secretos por defecto débiles",
+      "status": "FAIL",
+      "failure_reason": "docker-compose.yml contiene secretos predecibles en claro: JWT_SECRET=changeme, RABBITMQ_DEFAULT_PASS=guest, POSTGRES_PASSWORD=postgres."
+    },
+    {
+      "test_id": "TEST-SEC-014a",
+      "name": "Aislamiento de puertos de microservicios y bases de datos",
+      "status": "FAIL",
+      "failure_reason": "Puertos internos de backend expuestos al host: 8086, 8087, 5432, 5672, 15672."
+    },
+    {
+      "test_id": "TEST-SEC-014b",
+      "name": "Instrucción USER no-root en contenedores Docker",
+      "status": "FAIL",
+      "failure_reason": "Dockerfiles sin usuario no-root especificado: frontend."
+    }
+  ]
+}

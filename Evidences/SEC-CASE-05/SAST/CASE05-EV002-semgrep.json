@@ -1,0 +1,473 @@
+﻿[
+    {
+        "check_id":  "dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+        "path":  "api_cloud\\Dockerfile",
+        "start":  {
+                      "line":  24,
+                      "col":  1,
+                      "offset":  613
+                  },
+        "end":  {
+                    "line":  24,
+                    "col":  39,
+                    "offset":  651
+                },
+        "extra":  {
+                      "message":  "By not specifying a USER, a program in the container may run as \u0027root\u0027. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than \u0027root\u0027.",
+                      "fix":  "USER non-root\nENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-269: Improper Privilege Management"
+                                               ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "dockerfile"
+                                                      ],
+                                       "confidence":  "MEDIUM",
+                                       "owasp":  [
+                                                     "A04:2021 - Insecure Design",
+                                                     "A06:2025 - Insecure Design"
+                                                 ],
+                                       "references":  [
+                                                          "https://owasp.org/Top10/A04_2021-Insecure_Design"
+                                                      ],
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "MEDIUM",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+                                       "shortlink":  "https://sg.run/k281"
+                                   },
+                      "severity":  "ERROR",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "dockerfile.security.missing-user.missing-user",
+        "path":  "frontend\\Dockerfile",
+        "start":  {
+                      "line":  14,
+                      "col":  1,
+                      "offset":  303
+                  },
+        "end":  {
+                    "line":  14,
+                    "col":  35,
+                    "offset":  337
+                },
+        "extra":  {
+                      "message":  "By not specifying a USER, a program in the container may run as \u0027root\u0027. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than \u0027root\u0027.",
+                      "fix":  "USER non-root\nCMD [\"nginx\", \"-g\", \"daemon off;\"]",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-250: Execution with Unnecessary Privileges"
+                                               ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "dockerfile"
+                                                      ],
+                                       "confidence":  "MEDIUM",
+                                       "owasp":  [
+                                                     "A04:2021 - Insecure Design",
+                                                     "A06:2025 - Insecure Design"
+                                                 ],
+                                       "references":  [
+                                                          "https://owasp.org/Top10/A04_2021-Insecure_Design"
+                                                      ],
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "MEDIUM",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/dockerfile.security.missing-user.missing-user",
+                                       "shortlink":  "https://sg.run/Gbvn"
+                                   },
+                      "severity":  "ERROR",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+        "path":  "ms-pedidos360-catalog\\Dockerfile",
+        "start":  {
+                      "line":  24,
+                      "col":  1,
+                      "offset":  614
+                  },
+        "end":  {
+                    "line":  24,
+                    "col":  39,
+                    "offset":  652
+                },
+        "extra":  {
+                      "message":  "By not specifying a USER, a program in the container may run as \u0027root\u0027. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than \u0027root\u0027.",
+                      "fix":  "USER non-root\nENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-269: Improper Privilege Management"
+                                               ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "dockerfile"
+                                                      ],
+                                       "confidence":  "MEDIUM",
+                                       "owasp":  [
+                                                     "A04:2021 - Insecure Design",
+                                                     "A06:2025 - Insecure Design"
+                                                 ],
+                                       "references":  [
+                                                          "https://owasp.org/Top10/A04_2021-Insecure_Design"
+                                                      ],
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "MEDIUM",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+                                       "shortlink":  "https://sg.run/k281"
+                                   },
+                      "severity":  "ERROR",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+        "path":  "ms-pedidos360-notify\\Dockerfile",
+        "start":  {
+                      "line":  21,
+                      "col":  1,
+                      "offset":  559
+                  },
+        "end":  {
+                    "line":  21,
+                    "col":  39,
+                    "offset":  597
+                },
+        "extra":  {
+                      "message":  "By not specifying a USER, a program in the container may run as \u0027root\u0027. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than \u0027root\u0027.",
+                      "fix":  "USER non-root\nENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-269: Improper Privilege Management"
+                                               ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "dockerfile"
+                                                      ],
+                                       "confidence":  "MEDIUM",
+                                       "owasp":  [
+                                                     "A04:2021 - Insecure Design",
+                                                     "A06:2025 - Insecure Design"
+                                                 ],
+                                       "references":  [
+                                                          "https://owasp.org/Top10/A04_2021-Insecure_Design"
+                                                      ],
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "MEDIUM",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+                                       "shortlink":  "https://sg.run/k281"
+                                   },
+                      "severity":  "ERROR",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+        "path":  "ms-pedidos360-notify\\docker-compose.yml",
+        "start":  {
+                      "line":  4,
+                      "col":  3,
+                      "offset":  31
+                  },
+        "end":  {
+                    "line":  4,
+                    "col":  11,
+                    "offset":  39
+                },
+        "extra":  {
+                      "message":  "Service \u0027rabbitmq\u0027 allows for privilege escalation via setuid or setgid binaries. Add \u0027no-new-privileges:true\u0027 in \u0027security_opt\u0027 to prevent this.",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-732: Incorrect Permission Assignment for Critical Resource"
+                                               ],
+                                       "owasp":  [
+                                                     "A05:2021 - Security Misconfiguration",
+                                                     "A06:2017 - Security Misconfiguration",
+                                                     "A02:2025 - Security Misconfiguration"
+                                                 ],
+                                       "references":  [
+                                                          "https://raesene.github.io/blog/2019/06/01/docker-capabilities-and-no-new-privs/",
+                                                          "https://www.kernel.org/doc/Documentation/prctl/no_new_privs.txt",
+                                                          "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-4-add-no-new-privileges-flag"
+                                                      ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "docker-compose"
+                                                      ],
+                                       "cwe2021-top25":  true,
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "HIGH",
+                                       "confidence":  "LOW",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+                                       "shortlink":  "https://sg.run/0n8q"
+                                   },
+                      "severity":  "WARNING",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+        "path":  "ms-pedidos360-notify\\docker-compose.yml",
+        "start":  {
+                      "line":  4,
+                      "col":  3,
+                      "offset":  31
+                  },
+        "end":  {
+                    "line":  4,
+                    "col":  11,
+                    "offset":  39
+                },
+        "extra":  {
+                      "message":  "Service \u0027rabbitmq\u0027 is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add \u0027read_only: true\u0027 to this service to prevent this.",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-732: Incorrect Permission Assignment for Critical Resource"
+                                               ],
+                                       "owasp":  [
+                                                     "A05:2021 - Security Misconfiguration",
+                                                     "A06:2017 - Security Misconfiguration",
+                                                     "A02:2025 - Security Misconfiguration"
+                                                 ],
+                                       "references":  [
+                                                          "https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir",
+                                                          "https://blog.atomist.com/security-of-docker-kubernetes/",
+                                                          "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-8-set-filesystem-and-volumes-to-read-only"
+                                                      ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "docker-compose"
+                                                      ],
+                                       "cwe2021-top25":  true,
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "HIGH",
+                                       "confidence":  "LOW",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+                                       "shortlink":  "https://sg.run/e4JE"
+                                   },
+                      "severity":  "WARNING",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+        "path":  "ms-pedidos360-notify\\docker-compose.yml",
+        "start":  {
+                      "line":  19,
+                      "col":  3,
+                      "offset":  460
+                  },
+        "end":  {
+                    "line":  19,
+                    "col":  10,
+                    "offset":  467
+                },
+        "extra":  {
+                      "message":  "Service \u0027mailpit\u0027 allows for privilege escalation via setuid or setgid binaries. Add \u0027no-new-privileges:true\u0027 in \u0027security_opt\u0027 to prevent this.",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-732: Incorrect Permission Assignment for Critical Resource"
+                                               ],
+                                       "owasp":  [
+                                                     "A05:2021 - Security Misconfiguration",
+                                                     "A06:2017 - Security Misconfiguration",
+                                                     "A02:2025 - Security Misconfiguration"
+                                                 ],
+                                       "references":  [
+                                                          "https://raesene.github.io/blog/2019/06/01/docker-capabilities-and-no-new-privs/",
+                                                          "https://www.kernel.org/doc/Documentation/prctl/no_new_privs.txt",
+                                                          "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-4-add-no-new-privileges-flag"
+                                                      ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "docker-compose"
+                                                      ],
+                                       "cwe2021-top25":  true,
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "HIGH",
+                                       "confidence":  "LOW",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+                                       "shortlink":  "https://sg.run/0n8q"
+                                   },
+                      "severity":  "WARNING",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+        "path":  "ms-pedidos360-notify\\docker-compose.yml",
+        "start":  {
+                      "line":  19,
+                      "col":  3,
+                      "offset":  460
+                  },
+        "end":  {
+                    "line":  19,
+                    "col":  10,
+                    "offset":  467
+                },
+        "extra":  {
+                      "message":  "Service \u0027mailpit\u0027 is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add \u0027read_only: true\u0027 to this service to prevent this.",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-732: Incorrect Permission Assignment for Critical Resource"
+                                               ],
+                                       "owasp":  [
+                                                     "A05:2021 - Security Misconfiguration",
+                                                     "A06:2017 - Security Misconfiguration",
+                                                     "A02:2025 - Security Misconfiguration"
+                                                 ],
+                                       "references":  [
+                                                          "https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir",
+                                                          "https://blog.atomist.com/security-of-docker-kubernetes/",
+                                                          "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-8-set-filesystem-and-volumes-to-read-only"
+                                                      ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "docker-compose"
+                                                      ],
+                                       "cwe2021-top25":  true,
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "HIGH",
+                                       "confidence":  "LOW",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+                                       "shortlink":  "https://sg.run/e4JE"
+                                   },
+                      "severity":  "WARNING",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    },
+    {
+        "check_id":  "dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+        "path":  "ms-pedidos360-orders\\Dockerfile",
+        "start":  {
+                      "line":  24,
+                      "col":  1,
+                      "offset":  612
+                  },
+        "end":  {
+                    "line":  24,
+                    "col":  39,
+                    "offset":  650
+                },
+        "extra":  {
+                      "message":  "By not specifying a USER, a program in the container may run as \u0027root\u0027. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than \u0027root\u0027.",
+                      "fix":  "USER non-root\nENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]",
+                      "metadata":  {
+                                       "cwe":  [
+                                                   "CWE-269: Improper Privilege Management"
+                                               ],
+                                       "category":  "security",
+                                       "technology":  [
+                                                          "dockerfile"
+                                                      ],
+                                       "confidence":  "MEDIUM",
+                                       "owasp":  [
+                                                     "A04:2021 - Insecure Design",
+                                                     "A06:2025 - Insecure Design"
+                                                 ],
+                                       "references":  [
+                                                          "https://owasp.org/Top10/A04_2021-Insecure_Design"
+                                                      ],
+                                       "subcategory":  [
+                                                           "audit"
+                                                       ],
+                                       "likelihood":  "LOW",
+                                       "impact":  "MEDIUM",
+                                       "license":  "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                                       "vulnerability_class":  [
+                                                                   "Improper Authorization"
+                                                               ],
+                                       "source":  "https://semgrep.dev/r/dockerfile.security.missing-user-entrypoint.missing-user-entrypoint",
+                                       "shortlink":  "https://sg.run/k281"
+                                   },
+                      "severity":  "ERROR",
+                      "fingerprint":  "requires login",
+                      "lines":  "requires login",
+                      "validation_state":  "NO_VALIDATOR",
+                      "engine_kind":  "OSS"
+                  }
+    }
+]

@@ -1,0 +1,44 @@
+{
+  "test_suite": "SEC-CASE-05: Configuración segura",
+  "phase": "DAST",
+  "target_base_url": "http://127.0.0.1:8088",
+  "tests": [
+    {
+      "test_id": "DAST-05-01",
+      "sec_req": "SEC-REQ-013",
+      "owasp_wstg": "WSTG-CONF-07",
+      "name": "CORS permisivo con wildcard ante cualquier origen",
+      "method": "OPTIONS",
+      "path": "/api/catalog/products",
+      "headers": {
+        "Origin": "https://malicious-site.com",
+        "Access-Control-Request-Method": "POST"
+      },
+      "expected_baseline_header": {
+        "Access-Control-Allow-Origin": "*"
+      },
+      "assertion": "Returns wildcard origin header * for untrusted arbitrary origins",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-05-03",
+      "sec_req": "SEC-REQ-014",
+      "owasp_wstg": "WSTG-INFO-02",
+      "name": "Exposición externa directa de microservicios internos",
+      "target_ports": [8086, 8087, 5432, 15672],
+      "assertion": "Backend services and DB ports are exposed and directly connectable without BFF mediation",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-05-04",
+      "sec_req": "SEC-REQ-014",
+      "owasp_wstg": "WSTG-ERRH-01",
+      "name": "Fuga de excepciones internas mediante e.getMessage()",
+      "method": "GET",
+      "path": "/api/orders/00000000-0000-0000-0000-000000000000/enriched",
+      "expected_baseline_status": 500,
+      "assertion": "Response JSON body exposes raw internal Java exception details and backend microservice URLs",
+      "result": "FAIL"
+    }
+  ]
+}

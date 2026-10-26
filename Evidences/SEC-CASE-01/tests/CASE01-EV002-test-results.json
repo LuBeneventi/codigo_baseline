@@ -1,0 +1,17 @@
+{
+  "case_id": "SEC-CASE-01",
+  "tests": [
+    {
+      "test_id": "TEST-SEC-001",
+      "name": "Verificación de bloqueo tras intentos fallidos de login",
+      "status": "FAIL",
+      "failure_reason": "El endpoint /api/auth/login procesa credenciales sin contador de intentos fallidos ni bloqueo temporal."
+    },
+    {
+      "test_id": "TEST-SEC-003",
+      "name": "Expiración de token JWT de acceso <= 1 hora",
+      "status": "FAIL",
+      "failure_reason": "El token JWT se genera con una vigencia de 30 días (ChronoUnit.DAYS), superando el umbral seguro de <= 1 hora."
+    }
+  ]
+}

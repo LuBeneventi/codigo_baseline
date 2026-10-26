@@ -1,0 +1,56 @@
+﻿[
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\AuthController.java",
+        "line":  26,
+        "raw":  "// BASELINE-VULN [SEC-REQ-006]: el registro recibe la entidad User directamente permitiendo asignar roles arbitrarios",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\AuthController.java",
+        "line":  36,
+        "raw":  "// BASELINE-VULN [SEC-REQ-007]: la respuesta del registro expone la entidad User completa incluyendo el passwordHash",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\auth\\AuthController.java",
+        "line":  61,
+        "raw":  "// BASELINE-VULN [SEC-REQ-007]: el endpoint /me expone la entidad User completa incluyendo el passwordHash",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\OrdersController.java",
+        "line":  118,
+        "raw":  "// BASELINE-VULN [SEC-REQ-006]: solo completa descripcion y precioUnitario si no vienen; si vienen respeta los del cliente",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\OrdersController.java",
+        "line":  276,
+        "raw":  "// BASELINE-VULN [SEC-REQ-007]: devuelve nombre, correo, rut y direccion del cliente a cualquiera",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "api_cloud\\src\\main\\java\\cl\\duoc\\api\\SecurityConfig.java",
+        "line":  27,
+        "raw":  "// BASELINE-VULN [SEC-REQ-008]: BFF sin ningun limitador de peticiones (rate limiting)",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "ms-pedidos360-orders\\src\\main\\java\\com\\pedidos360\\orders\\dto\\OrderResponseDto.java",
+        "line":  21,
+        "raw":  "// BASELINE-VULN [SEC-REQ-007]: expone nombre, correo, rut y direccion del cliente a cualquier consultante",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "ms-pedidos360-orders\\src\\main\\java\\com\\pedidos360\\orders\\service\\impl\\OrderServiceImpl.java",
+        "line":  38,
+        "raw":  "// BASELINE-VULN [SEC-REQ-006]: toma clienteId, nombre, correo, direccion y RUT directamente del body sin validar identidad",
+        "category":  "SEC-CASE-03: API"
+    },
+    {
+        "file":  "ms-pedidos360-orders\\src\\main\\java\\com\\pedidos360\\orders\\service\\impl\\OrderServiceImpl.java",
+        "line":  156,
+        "raw":  "// BASELINE-VULN [SEC-REQ-007]: el mapper incluye rut y direccion en la respuesta expuesta",
+        "category":  "SEC-CASE-03: API"
+    }
+]

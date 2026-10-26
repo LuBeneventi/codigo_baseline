@@ -1,0 +1,49 @@
+{
+  "test_suite": "SEC-CASE-01: Autenticación y gestión de sesiones",
+  "phase": "DAST",
+  "target_base_url": "http://127.0.0.1:8088",
+  "tests": [
+    {
+      "test_id": "DAST-01-01",
+      "sec_req": "SEC-REQ-001",
+      "owasp_wstg": "WSTG-ATHN-03",
+      "name": "Fuerza bruta en endpoint de login sin bloqueo ni rate limiting",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "email": "admin@cafe.test",
+        "password": "WrongPassword${index}"
+      },
+      "iterations": 15,
+      "expected_baseline_status": 401,
+      "expected_remediated_status": 429,
+      "assertion": "Status code remains 401 across all 15 attempts without 429 or account lockout",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-01-02",
+      "sec_req": "SEC-REQ-003",
+      "owasp_wstg": "WSTG-SESS-07",
+      "name": "Expiración excesiva de token JWT (30 días)",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "email": "cliente1@cafe.test",
+        "password": "Test1234!"
+      },
+      "token_validation": {
+        "payload_field": "exp",
+        "max_allowed_validity_seconds": 3600,
+        "observed_validity_seconds": 2592000
+      },
+      "assertion": "JWT token expiration delta is exactly 2592000 seconds (30 days)",
+      "result": "FAIL"
+    }
+  ]
+}

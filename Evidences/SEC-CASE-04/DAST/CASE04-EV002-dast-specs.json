@@ -1,0 +1,51 @@
+{
+  "test_suite": "SEC-CASE-04: Validación y sanitización de entradas",
+  "phase": "DAST",
+  "target_base_url": "http://127.0.0.1:8088",
+  "tests": [
+    {
+      "test_id": "DAST-04-01",
+      "sec_req": "SEC-REQ-010",
+      "owasp_wstg": "WSTG-INPV-05",
+      "owasp_api": "API8:2023 (Security Misconfiguration / Injection)",
+      "name": "SQL Injection en búsqueda de catálogo mediante tautología",
+      "method": "GET",
+      "path": "/api/catalog/products/search?q=%27%20OR%20%271%27%3D%271",
+      "expected_baseline_status": 200,
+      "expected_remediated_status": 200,
+      "assertion": "Returns all catalog products instead of an empty set or literal match",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-04-02",
+      "sec_req": "SEC-REQ-010",
+      "owasp_wstg": "WSTG-INPV-01",
+      "name": "Aceptación de cantidad negativa en creación de pedidos",
+      "method": "POST",
+      "path": "/api/orders",
+      "body": {
+        "items": [
+          {
+            "productoId": "any-product-id",
+            "cantidad": -10,
+            "precioUnitario": 1000
+          }
+        ]
+      },
+      "expected_baseline_status": 201,
+      "expected_remediated_status": 400,
+      "assertion": "Order is created successfully despite negative quantity",
+      "result": "FAIL"
+    },
+    {
+      "test_id": "DAST-04-04",
+      "sec_req": "SEC-REQ-009",
+      "owasp_wstg": "WSTG-CLNT-01",
+      "name": "Stored DOM XSS mediante dangerouslySetInnerHTML en Frontend",
+      "target": "Frontend UI",
+      "vector": "<img src=x onerror=alert(1)>",
+      "assertion": "Raw HTML tags executed in DOM without sanitization",
+      "result": "FAIL"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "SEC-CASE-03",
+  "tests": [
+    {
+      "test_id": "TEST-SEC-006a",
+      "name": "Uso de DTO dedicado en registro para prevenir Mass Assignment",
+      "status": "FAIL",
+      "failure_reason": "El endpoint /api/auth/register recibe la entidad JPA User directamente, permitiendo inyectar 'role':'ADMIN'."
+    },
+    {
+      "test_id": "TEST-SEC-006b",
+      "name": "Validación estricta de precios de catálogo en creación de pedidos",
+      "status": "FAIL",
+      "failure_reason": "El BFF solo consulta el catálogo si precioUnitario no viene; si el cliente lo envía, respeta el precio del cliente."
+    },
+    {
+      "test_id": "TEST-SEC-007a",
+      "name": "Ocultamiento de passwordHash en respuestas de API",
+      "status": "FAIL",
+      "failure_reason": "El campo passwordHash de la entidad User no posee anotación @JsonIgnore ni DTO de proyección seguro."
+    },
+    {
+      "test_id": "TEST-SEC-008",
+      "name": "Presencia de filtro de Rate Limiting en BFF",
+      "status": "FAIL",
+      "failure_reason": "SecurityConfig no registra ningún filtro de limitación de tasa de peticiones (Rate Limiter)."
+    }
+  ]
+}
